@@ -1,1 +1,3 @@
-1 https://pbs.twimg.com/media/D20N5ycWwAErok3.jpg 450 150 "premiere case: contexte normal , deuxieme case: chute de la blague"
+2 https://pbs.twimg.com/media/D20N5ycWwAErok3.jpg 440 0 950 480 440 480 950 950 "le premier text doit etre une mise en situation normal et le deuxieme doit etre une chute qui serait une meilleur version que la premiere"
+2 https://imgflip.com/s/meme/Woman-Yelling-At-Cat.jpg 0 0 340 100 340 0 680 100 "le premier text doit etre du point de vue de quelqu'un d'enerver et le deuxieme est une reponse drole"
+2 https://imgflip.com/s/meme/Blank-Nut-Button.jpg 250 50 550 350 50 200 300 400 "le premier text doit etre quelqu'un dans une situation et le deuxieme doit etre une action marante que la personne ferait"
