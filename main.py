@@ -1,34 +1,16 @@
-from langchain.agents import Tool
-from langchain.agents import load_tools
-from langchain.agents import AgentType
-from langchain.agents import initialize_agent
-from langchain.memory import ConversationBufferMemory
-from langchain import OpenAI
-from langchain.agents import initialize_agent
 from langchain.chat_models import ChatOpenAI
 import re
-from langchain.tools import DuckDuckGoSearchRun
-from langchain.chains import ConversationChain
 import os
-from langchain.agents.agent_toolkits import GmailToolkit
 import requests
 from PIL import Image, ImageDraw, ImageFont
 import random
 from langchain.prompts import (
     ChatPromptTemplate, 
-    MessagesPlaceholder, 
     SystemMessagePromptTemplate, 
     HumanMessagePromptTemplate
 )
 
-
-key = 'Api-KEY'
-template = "genere un meme (Humour d'internet) sur '{sujet}', il faut {mode} phrases, chaque phrases doit etre courtes (moins de 10 mots).Si la phrase n'est pas un dialogue alors ne pas mettre de quotes. Le formatage de la reponse doit etre les deux phrases separer par un '|' n'ecrit pas de ponctuation et ne precise pas le type du text."
-system_message_prompt = SystemMessagePromptTemplate.from_template(template)
-human_template = "en français : {context}"
-human_message_prompt = HumanMessagePromptTemplate.from_template(human_template)
-chat_prompt = ChatPromptTemplate.from_messages([system_message_prompt, human_message_prompt])
-llm = ChatOpenAI(temperature=0.7, model_name="gpt-3.5-turbo" ,openai_api_key=key)
+key = 'Api_key'
 
 def ft_dl(url):
     response = requests.get(url)
@@ -49,8 +31,11 @@ def ft_text_to_image(mode,x1,y1,x2,y2,text,file="meme.jpg"):
     draw = ImageDraw.Draw(image)
     point1 = (x1, y1)
     point2 = (x2, y2)
+    r = 10
+    #draw.ellipse((x1-r, y1-r, x1+r, y1+r), fill='blue')
+    #draw.ellipse((x2-r, y2-r, x2+r, y2+r), fill='red')
     font_size = 40
-    font = ImageFont.truetype("Memesique-Regular.ttf", font_size)  # Chargement de la police
+    font = ImageFont.truetype("Memesique-Regular.ttf", font_size)
     text_width, _ = draw.textsize(text, font=font)
     if text_width > x2 - x1:
         new_font_size = int(font.size * (x2 - x1 - 20) / text_width)
@@ -61,10 +46,10 @@ def ft_text_to_image(mode,x1,y1,x2,y2,text,file="meme.jpg"):
     text_y1 = point1[1] + (point2[1] - point1[1]) // 2 - text_height // 2
     couleur_contour = (0,0,0)
     for adj in [-3,-2, -1, 0, 1, 2,3]:
-        draw.text((text_x1+adj,text_y1), text, fill=couleur_contour, font=font)
-        draw.text((text_x1,text_y1+adj), text, fill=couleur_contour, font=font)
-        draw.text((text_x1+adj,text_y1+adj), text, fill=couleur_contour, font=font)
-        draw.text((text_x1+adj,text_y1-adj), text, fill=couleur_contour, font=font)
+        draw.text((text_x1+adj,text_y1), text, fill='black', font=font)
+        draw.text((text_x1,text_y1+adj), text, fill='black', font=font)
+        draw.text((text_x1+adj,text_y1+adj), text, fill='black', font=font)
+        draw.text((text_x1+adj,text_y1-adj), text, fill='black', font=font)
     draw.text((text_x1, text_y1), text, font=font, fill='white')
     image.save("meme.jpg")
 
@@ -138,20 +123,29 @@ def make_meme(coords, phrases, mode):
             ft_text_to_image(mode, x1, y1, x2, y2 ,final)
         i += 1
 
+def ft_generate_text(context, sujet, mode):
+    template = "genere un meme (Humour d'internet) sur '{sujet}', il faut {mode} phrases, chaque phrases doit etre courtes (moins de 10 mots).Si la phrase n'est pas un dialogue alors ne pas mettre de quotes. Le formatage de la reponse doit etre les deux phrases separer par un '|' n'ecrit pas de ponctuation et ne precise pas le type du text."
+    system_message_prompt = SystemMessagePromptTemplate.from_template(template)
+    human_template = "en français : {context}"
+    human_message_prompt = HumanMessagePromptTemplate.from_template(human_template)
+    chat_prompt = ChatPromptTemplate.from_messages([system_message_prompt, human_message_prompt])
+    llm = ChatOpenAI(temperature=0.4, model_name="gpt-3.5-turbo" ,openai_api_key=key)
+    reponse = llm(chat_prompt.format_prompt(sujet=sujet,mode=str(mode),context=context).to_messages())
+    return str(reponse.content)
+
 def lemain():
     sujet = input("choisit un sujet de meme : ")
-    mode = 2
+    mode = random.randint(1, 2)
+    #mode = 1
     url , coords, context  = search_from_mode(mode)
     ft_dl(url)
-
-    reponse = llm(chat_prompt.format_prompt(sujet=sujet,mode=str(mode),context=context).to_messages())
-    reponse =str(reponse.content)
-
+    reponse = ft_generate_text(context,sujet,mode)
     print("\n\nREPONSE = "+reponse)
-
     print("coords = "+str(coords))
     make_meme(coords, reponse, mode)
     os.system("rm ref.jpeg")
     print("terminer")
     
 lemain()
+#ft_dl("https://64.media.tumblr.com/15476efad56d39b91f187dfa1c587b33/522ef13fdfd4fe88-cb/s500x750/947923c111bf3823dd00da1e89d7f65e1ada31b6.jpg")
+#ft_text_to_image(1, 60, 100, 400, 300, "je suis un enorme text tres long", "ref.jpeg")

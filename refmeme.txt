@@ -1,3 +1,6 @@
 2 https://pbs.twimg.com/media/D20N5ycWwAErok3.jpg 440 0 950 480 440 480 950 950 "le premier text doit etre une mise en situation normal et le deuxieme doit etre une chute qui serait une meilleur version que la premiere"
 2 https://imgflip.com/s/meme/Woman-Yelling-At-Cat.jpg 0 0 340 100 340 0 680 100 "le premier text doit etre du point de vue de quelqu'un d'enerver et le deuxieme est une reponse drole"
 2 https://imgflip.com/s/meme/Blank-Nut-Button.jpg 250 50 550 350 50 200 300 400 "le premier text doit etre quelqu'un dans une situation et le deuxieme doit etre une action marante que la personne ferait"
+#1 https://i.imgflip.com/4051du.png?a467880 0 0 360 150 "le text doit etre quelqu'un dans une situation drole et qui presente une tete blazé"
+#1 https://imgflip.com/s/meme/UNO-Draw-25-Cards.jpg 20 100 250 300 "le text doit etre une action (marrante) que personne ne veux faire comme 'Avouer que j'ai tord' , la suite du text que tu ne doit pas ecrire sera 'ou prendre 25 carte'"
+1 https://64.media.tumblr.com/15476efad56d39b91f187dfa1c587b33/522ef13fdfd4fe88-cb/s500x750/947923c111bf3823dd00da1e89d7f65e1ada31b6.jpg 60 100 400 300 "le text doit etre une formatter comme ça : {name} quand les {action} (l'action doit montrer une mefiance)"
